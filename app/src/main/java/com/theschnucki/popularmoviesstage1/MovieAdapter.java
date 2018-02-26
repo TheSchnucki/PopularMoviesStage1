@@ -20,20 +20,15 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieAdapter
     //An on click Handler to interface with the RecyclerView
     private final MovieAdapterOnClickHandler mClickHandler;
 
-    //TODO modify interface for final use, different data different Type
     public interface MovieAdapterOnClickHandler {
         void onClick (Movie movie);
     }
 
-
-    //TODO change the constructor to use onClickHandler
     public MovieAdapter(MovieAdapterOnClickHandler clickHandler) {
         mClickHandler = clickHandler;
     }
 
-    //TODO implement OnClickListener
     public class MovieAdapterViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
-
 
         public MovieAdapterViewHolder(View view) {
             super(view);
@@ -72,6 +67,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieAdapter
         return mMovieList.size();
     }
 
+    //Method to refresh the data
     public void setMovieList(List<Movie> movieList){
         mMovieList = movieList;
         notifyDataSetChanged();
