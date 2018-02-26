@@ -6,7 +6,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
+import com.squareup.picasso.Picasso;
 import com.theschnucki.popularmoviesstage1.model.Movie;
 
 import java.util.List;
@@ -29,9 +31,11 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieAdapter
     }
 
     public class MovieAdapterViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+        public ImageView posterIv;
 
         public MovieAdapterViewHolder(View view) {
             super(view);
+            posterIv = (ImageView) view.findViewById(R.id.grid_item_iv);
             view.setOnClickListener(this);
         }
 
@@ -42,7 +46,6 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieAdapter
             Movie movie = mMovieList.get(adapterPosition);
             mClickHandler.onClick(movie);
         }
-
     }
 
     //this method gets called when new ViewHolder is created
@@ -58,7 +61,9 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieAdapter
     //called by RecyclerView to put Data into ViewHolder
     @Override
     public void onBindViewHolder(MovieAdapterViewHolder movieAdapterViewHolder, int position) {
-
+        String posterPath = mMovieList.get(position).getPosterPath();
+        Context context = movieAdapterViewHolder.posterIv.getContext();
+        Picasso.with(context).load(posterPath).into(movieAdapterViewHolder.posterIv);
     }
 
     @Override

@@ -11,6 +11,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.theschnucki.popularmoviesstage1.model.Movie;
+import com.theschnucki.popularmoviesstage1.utilities.JsonUtils;
+import com.theschnucki.popularmoviesstage1.utilities.NetworkUtils;
 
 import java.net.URL;
 import java.util.List;
@@ -54,9 +56,8 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
         //Progress bar indicates that Data is loading
         mLoadingIndicator = (ProgressBar) findViewById(R.id.loading_indicator_pb);
 
-        //TODO implement the loadMovieData method
         //Once all of the views are set up, load Movie data
-        //loadMovieData();
+        loadMovieData();
     }
 
     private void loadMovieData() {
@@ -102,7 +103,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
             URL movieRequestUrl = NetworkUtils.buildUrl(sortOrder);
 
             try {
-                String jsonMovieResponse = NetworkUtils.getResponseFrom URL(movieRequestUrl);
+                String jsonMovieResponse = NetworkUtils.getResponseFromHttpsURL(movieRequestUrl);
 
                 List<Movie> simpleMovieList = JsonUtils.getSimpleMovieListFromJson(MainActivity.this, jsonMovieResponse);
 
@@ -114,7 +115,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
         }
 
         @Override
-        protected void onPostExecution(List<Movie> loadedMovieList) {
+        protected void onPostExecute(List<Movie> loadedMovieList) {
             mLoadingIndicator.setVisibility(View.INVISIBLE);
             if (loadedMovieList != null) {
                 showMovieDataView();
