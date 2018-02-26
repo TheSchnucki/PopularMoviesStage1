@@ -1,14 +1,19 @@
 package com.theschnucki.popularmoviesstage1;
 
 import android.content.Context;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.theschnucki.popularmoviesstage1.model.Movie;
+
+import java.net.URL;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements MovieAdapter.MovieAdapterOnClickHandler {
 
@@ -51,11 +56,73 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
 
         //TODO implement the loadMovieData method
         //Once all of the views are set up, load Movie data
-        //loadMovieData;
+        //loadMovieData();
+    }
+
+    private void loadMovieData() {
+        showMovieDataView();
+
+        //TODO get sort order from users choice
+        String sortOrder = "popularity.desc";
+        new FetchMoviesTask().execute(sortOrder);
     }
 
     @Override
     public void onClick(Movie movie) {
         Context context = this;
     }
+
+    //This method will make the MovieGrid visible and hide the error message
+    private void showMovieDataView() {
+        mErrorMessageDisplay.setVisibility(View.INVISIBLE);
+        mRecyclerView.setVisibility(View.VISIBLE);
+    }
+
+    //This method will show an error message and hide the MovieGrid
+    private void showErrorMessage() {
+        mRecyclerView.setVisibility(View.INVISIBLE);
+        mErrorMessageDisplay.setVisibility(View.VISIBLE);
+    }
+
+    public class FetchMoviesTask extends AsyncTask<String, Void, List<Movie>> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            mLoadingIndicator.setVisibility(View.VISIBLE);
+        }
+
+        @Override
+        protected List<Movie> doInBackground(String... params) {
+
+            //if there are no search parameter
+            if (params.length == 0) return null;
+
+            String sortOrder = params[0];
+            URL movieRequestUrl = NetworkUtils.buildUrl(sortOrder);
+
+            try {
+                String jsonMovieResponse = NetworkUtils.getResponseFrom URL(movieRequestUrl);
+
+                List<Movie> simpleMovieList = JsonUtils.getSimpleMovieListFromJson(MainActivity.this, jsonMovieResponse);
+
+                return simpleMovieList;
+            } catch (Exception e) {
+                e.printStackTrace();
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPostExecution(List<Movie> loadedMovieList) {
+            mLoadingIndicator.setVisibility(View.INVISIBLE);
+            if (loadedMovieList != null) {
+                showMovieDataView();
+                mMovieAdapter.setMovieList(loadedMovieList);
+            } else {
+                showErrorMessage();
+            }
+        }
+    }
 }
+
