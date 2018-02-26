@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -30,6 +32,8 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
     private TextView mErrorMessageDisplay;
 
     private ProgressBar mLoadingIndicator;
+
+    private String sortOrder = "popularity.desc";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,9 +67,6 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
 
     private void loadMovieData() {
         showMovieDataView();
-
-        //TODO get sort order from users choice
-        String sortOrder = "popularity.desc";
         new FetchMoviesTask().execute(sortOrder);
     }
 
@@ -131,5 +132,19 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
             }
         }
     }
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
+
+    public boolean onOptionsItemSelected (MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.pop_sort)  sortOrder = "popularity.desc";
+        if (id == R.id.rate_sort) sortOrder = "vote_average.desc";
+        loadMovieData();
+        return true;
+    }
+
 }
 
