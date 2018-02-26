@@ -51,12 +51,10 @@ public class DetailActivity extends AppCompatActivity {
     private void populateUI(Movie movie) {
         TextView releaseDateTv = findViewById(R.id.release_date_Tv);
         TextView voteAverageTv = findViewById(R.id.vote_average_Tv);
-        TextView popularityTv = findViewById(R.id.popilarity_Tv);
         TextView overviewTv = findViewById(R.id.overview_Tv);
 
         releaseDateTv.setText(movie.getReleaseDate());
         voteAverageTv.setText(movie.getVoteAverage());
-        popularityTv.setText(movie.getPopularity());
         overviewTv.setText(movie.getOverview());
     }
 }

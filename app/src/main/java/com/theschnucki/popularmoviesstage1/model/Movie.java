@@ -12,7 +12,6 @@ public class Movie implements Parcelable {
     private String releaseDate;
     private String posterPath;
     private String voteAverage;
-    private String popularity;
     private String overview;
 
     public String getTitle() {
@@ -47,14 +46,6 @@ public class Movie implements Parcelable {
         this.voteAverage = voteAverage;
     }
 
-    public String getPopularity() {
-        return popularity;
-    }
-
-    public void setPopularity(String popularity) {
-        this.popularity = popularity;
-    }
-
     public String getOverview() {
         return overview;
     }
@@ -74,7 +65,6 @@ public class Movie implements Parcelable {
         dest.writeString(this.releaseDate);
         dest.writeString(this.posterPath);
         dest.writeString(this.voteAverage);
-        dest.writeString(this.popularity);
         dest.writeString(this.overview);
     }
 
@@ -86,7 +76,6 @@ public class Movie implements Parcelable {
         this.releaseDate = in.readString();
         this.posterPath = in.readString();
         this.voteAverage = in.readString();
-        this.popularity = in.readString();
         this.overview = in.readString();
     }
 
