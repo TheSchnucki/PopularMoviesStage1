@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
 
     private ProgressBar mLoadingIndicator;
 
-    private String sortOrder = "popularity.desc";
+    private String sortOrder = "popular";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -140,8 +140,8 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
     public boolean onOptionsItemSelected (MenuItem item) {
         int id = item.getItemId();
 
-        if (id == R.id.pop_sort)  sortOrder = "popularity.desc";
-        if (id == R.id.rate_sort) sortOrder = "vote_average.desc";
+        if (id == R.id.pop_sort)  sortOrder = "popular";
+        if (id == R.id.rate_sort) sortOrder = "top_rated";
         loadMovieData();
         return true;
     }
