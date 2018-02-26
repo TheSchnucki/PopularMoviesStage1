@@ -1,14 +1,20 @@
 package com.theschnucki.popularmoviesstage1;
 
-import android.graphics.Movie;
-import android.support.v7.app.AppCompatActivity;
+import android.content.Context;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-public class MainActivity extends AppCompatActivity {
+import com.theschnucki.popularmoviesstage1.model.Movie;
+
+public class MainActivity extends AppCompatActivity implements MovieAdapter.MovieAdapterOnClickHandler {
+
+    private static final String TAG = MainActivity.class.getSimpleName();
+
+    private static final String API_KEY = BuildConfig.API_KEY;
 
     private RecyclerView mRecyclerView;
     private MovieAdapter mMovieAdapter;
@@ -46,5 +52,10 @@ public class MainActivity extends AppCompatActivity {
         //TODO implement the loadMovieData method
         //Once all of the views are set up, load Movie data
         //loadMovieData;
+    }
+
+    @Override
+    public void onClick(Movie movie) {
+        Context context = this;
     }
 }
