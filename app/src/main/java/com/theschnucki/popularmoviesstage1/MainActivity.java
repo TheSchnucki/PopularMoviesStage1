@@ -1,6 +1,7 @@
 package com.theschnucki.popularmoviesstage1;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -71,6 +72,11 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
     @Override
     public void onClick(Movie movie) {
         Context context = this;
+
+        //TODO implement Intend for detail view
+        Intent intent = new Intent(this, DetailActivity.class);
+        intent.putExtra("movie_parcel", movie);
+        startActivity(intent);
     }
 
     //This method will make the MovieGrid visible and hide the error message

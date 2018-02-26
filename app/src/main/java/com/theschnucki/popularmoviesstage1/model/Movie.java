@@ -1,8 +1,10 @@
 package com.theschnucki.popularmoviesstage1.model;
 
 
+import android.os.Parcel;
+import android.os.Parcelable;
 
-public class Movie {
+public class Movie implements Parcelable {
 
     public static final String TAG = Movie.class.getSimpleName();
 
@@ -60,4 +62,43 @@ public class Movie {
     public void setOverview(String overview) {
         this.overview = overview;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.title);
+        dest.writeString(this.releaseDate);
+        dest.writeString(this.posterPath);
+        dest.writeString(this.voteAverage);
+        dest.writeString(this.popularity);
+        dest.writeString(this.overview);
+    }
+
+    public Movie() {
+    }
+
+    protected Movie(Parcel in) {
+        this.title = in.readString();
+        this.releaseDate = in.readString();
+        this.posterPath = in.readString();
+        this.voteAverage = in.readString();
+        this.popularity = in.readString();
+        this.overview = in.readString();
+    }
+
+    public static final Parcelable.Creator<Movie> CREATOR = new Parcelable.Creator<Movie>() {
+        @Override
+        public Movie createFromParcel(Parcel source) {
+            return new Movie(source);
+        }
+
+        @Override
+        public Movie[] newArray(int size) {
+            return new Movie[size];
+        }
+    };
 }
